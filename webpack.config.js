@@ -11,6 +11,10 @@ module.exports = {
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
+      {
+        test: /\.(css)$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   resolve: {
@@ -20,7 +24,10 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js',
   },
-  plugins: [new webpack.HotModuleReplacementPlugin(), new ESLintPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new ESLintPlugin(),
+  ],
   devServer: {
     static: path.resolve(__dirname, './dist'),
     hot: true,
