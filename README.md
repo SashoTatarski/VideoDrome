@@ -4,4 +4,4 @@ http://SashoTatarski.github.io/VideoDrome
 - babel config
 - ESLint & Prettier config
 - CSS config
-- Github pages
+- CI/CD Github pages
