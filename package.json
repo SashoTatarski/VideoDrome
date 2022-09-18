@@ -10,8 +10,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "build": "webpack --mode production",
-    "lint": "eslint --fix",
-    "pretty": "prettier --write .",
+    "lint": "eslint --fix",    
     "prepare": "husky install"
   },
   "keywords": [],
