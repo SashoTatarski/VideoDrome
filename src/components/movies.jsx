@@ -15,7 +15,7 @@ const Movies = () => {
     debugger;
     const clonedMovies = [...movies];
     const index = clonedMovies.indexOf(movie);
-    clonedMovies[index] = { ...clonedMovies[index]};
+    clonedMovies[index] = { ...clonedMovies[index] };
     clonedMovies[index].liked = !clonedMovies[index].liked;
 
     setMovies(clonedMovies);
@@ -26,7 +26,7 @@ const Movies = () => {
   ) : (
     <>
       <p>Showing {count} movies</p>
-      <table class="table">
+      <table className="table">
         <thead>
           <tr>
             <th>Title</th>
@@ -38,8 +38,8 @@ const Movies = () => {
           </tr>
         </thead>
         <tbody>
-          {movies.map((movie) => (
-            <tr key={movie.id}>
+          {movies.map(movie => (
+            <tr key={movie._id}>
               <td>{movie.title}</td>
               <td>{movie.genre.name}</td>
               <td>{movie.numberInStock}</td>
@@ -54,7 +54,7 @@ const Movies = () => {
                 <button
                   onClick={() => handleDelete(movie)}
                   type="button"
-                  class="btn btn-danger btn-sm"
+                  className="btn btn-danger btn-sm"
                 >
                   Delete
                 </button>
