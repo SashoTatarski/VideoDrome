@@ -8,6 +8,7 @@ const movies = [
     numberInStock: 6,
     dailyRentalRate: 2.5,
     publishDate: '2018-01-03T19:04:28.809Z',
+    liked: false
   },
   {
     _id: '5b21ca3eeb7f6fbccd471816',
@@ -42,7 +43,7 @@ const movies = [
     title: 'Wedding Crashers',
     genre: { _id: '5b21ca3eeb7f6fbccd471814', name: 'Comedy' },
     numberInStock: 7,
-    dailyRentalRate: 3.5,
+    dailyRentalRate: 3.5,    
   },
   {
     _id: '5b21ca3eeb7f6fbccd47181e',
