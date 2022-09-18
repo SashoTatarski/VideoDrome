@@ -1,8 +1,14 @@
 import React from 'react';
+import Movies from './components/movies';
 
-const App = ({ title }) => {
-  const tempVar = 5;
-  <div>{title}</div>;
+const App = () => {
+  return (
+    <>
+      <main className="container">        
+        <Movies />
+      </main>
+    </>
+  );
 };
 
 export default App;
