@@ -1,0 +1,16 @@
+{
+  "parser": "@babel/eslint-parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "no-unused-vars": 0,
+    "react/prop-types": 0,
+    "no-dupe-keys": 0,
+    "no-undef": 0
+  }
+}
