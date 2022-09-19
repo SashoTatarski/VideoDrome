@@ -14,7 +14,7 @@ const Movies = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const genres = [{ name: 'All Genres' }, ...getGenres()];
+    const genres = [{ _id: '', name: 'All Genres' }, ...getGenres()];
 
     setGenres(genres);
     setMovies(getMovies());
@@ -33,7 +33,7 @@ const Movies = () => {
     setMovies(filteredMovies);
   };
 
-  const handleLike = (movie) => {    
+  const handleLike = (movie) => {
     const clonedMovies = [...movies];
     const index = clonedMovies.indexOf(movie);
     clonedMovies[index] = { ...clonedMovies[index] };
@@ -49,6 +49,10 @@ const Movies = () => {
   const handleGenreSelect = (genre) => {
     setCurrentPage(1);
     setSelectedGenre(genre);
+  };
+
+  const handleSort = (path) => {
+    console.log(path);
   };
 
   return count === 0 ? (
@@ -68,6 +72,7 @@ const Movies = () => {
           movies={paginatedMovies}
           onDelete={handleDelete}
           onLike={handleLike}
+          onSort={handleSort}
         />
         <Pagination
           itemsCount={filtered.length}
