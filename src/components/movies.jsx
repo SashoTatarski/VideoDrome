@@ -33,8 +33,7 @@ const Movies = () => {
     setMovies(filteredMovies);
   };
 
-  const handleLike = (movie) => {
-    debugger;
+  const handleLike = (movie) => {    
     const clonedMovies = [...movies];
     const index = clonedMovies.indexOf(movie);
     clonedMovies[index] = { ...clonedMovies[index] };
@@ -68,6 +67,7 @@ const Movies = () => {
         <MoviesTable
           movies={paginatedMovies}
           onDelete={handleDelete}
+          onLike={handleLike}
         />
         <Pagination
           itemsCount={filtered.length}
