@@ -8,3 +8,8 @@ http://SashoTatarski.github.io/VideoDrome
 
 - Bootstrap
 - Font-awesome
+
+- function components
+- hooks
+- pagination
+- filtering
