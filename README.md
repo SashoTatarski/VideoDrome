@@ -8,8 +8,11 @@ http://SashoTatarski.github.io/VideoDrome
 
 - Bootstrap
 - Font-awesome
+- Lodash
 
 - function components
 - hooks
-- pagination
+- sorting,pagination -> TO DO Prev & Next buttons
 - filtering
+- proptypes, defaultProps
+- useState, useEffect
