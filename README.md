@@ -11,6 +11,7 @@ http://SashoTatarski.github.io/VideoDrome
 - Lodash
 - React Testing Library
 - Jest
+- react-hooks-testing-library
 
 - function components
 - Custom Hooks

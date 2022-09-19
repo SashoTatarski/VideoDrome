@@ -17,14 +17,14 @@ it('renders Like correctly', () => {
   expect(queryByTestId('like')).toBeTruthy();
 });
 
-describe('Value change', () => {
-  it('updates on change', () => {
-    const { queryByTestId } = render(<Like liked={true} />);
-    const value = queryByTestId('Like');
-    fireEvent.click(value, {target: {value: 'fa fa-heart'}})
-    expect(value.value).toBe("fa fa-heart")
-  });
-});
+// describe('Value change', () => {
+//   it('updates on change', () => {
+//     const { queryByTestId } = render(<Like liked={true} />);
+//     const value = queryByTestId('Like');
+//     fireEvent.click(value, {target: {value: 'fa fa-heart'}})
+//     expect(value.value).toBe("fa fa-heart")
+//   });
+// });
 
 it('renders Like correctly', () => {
   const { getByTestId } = render(<Like />);
