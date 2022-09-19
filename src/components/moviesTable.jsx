@@ -1,7 +1,6 @@
 import React from 'react';
 import Like from './common/like';
-import TableBody from './common/tableBody';
-import TableHeader from './common/tableHeader';
+import Table from './common/table';
 
 const MoviesTable = ({
   movies,
@@ -35,14 +34,12 @@ const MoviesTable = ({
     },
   ];
   return (
-    <table className="table">
-      <TableHeader
-        columns={columns}
-        sortColumn={sortColumn}
-        onSort={onSort}
-      />
-      <TableBody data={movies} columns={columns} />
-    </table>
+    <Table
+      columns={columns}
+      data={movies}
+      sortColumn={sortColumn}
+      onSort={onSort}
+    />
   );
 };
 
