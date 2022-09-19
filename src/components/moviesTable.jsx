@@ -17,7 +17,10 @@ const MoviesTable = ({
     {
       key: 'like',
       content: (movie) => (
-        <Like liked={movie.liked} onClick={() => onLike(movie)} />
+        <Like               
+          liked={movie.liked}
+          onClick={() => onLike(movie)}
+        />
       ),
     },
     {
