@@ -8,6 +8,7 @@ const MoviesTable = ({
   onLike,
   sortColumn,
   onSort,
+  testId
 }) => {
   const columns = [
     { path: 'title', label: 'Title' },
@@ -17,10 +18,7 @@ const MoviesTable = ({
     {
       key: 'like',
       content: (movie) => (
-        <Like               
-          liked={movie.liked}
-          onClick={() => onLike(movie)}
-        />
+        <Like liked={movie.liked} onClick={() => onLike(movie)} />
       ),
     },
     {
@@ -37,11 +35,12 @@ const MoviesTable = ({
     },
   ];
   return (
-    <Table
+    <Table      
       columns={columns}
       data={movies}
       sortColumn={sortColumn}
       onSort={onSort}
+      testId={testId}
     />
   );
 };

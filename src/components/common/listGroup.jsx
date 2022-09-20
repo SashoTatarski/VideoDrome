@@ -1,26 +1,27 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import PropTypes from "prop-types";
 
 // textProperty, valueProperty we are using them in order to be decoupled and be able to use it with any kind of list
-const ListGroup = ({
+const ListGroup = ({  
   items,
   onItemSelect,
   textProperty,
   valueProperty,
-  selectedItem,
+  selectedItem  
 }) => {
   return (
     <ul className="list-group">
       {items.map((item) => {
-        let classname = 'list-group-item ';
-        if (selectedItem === item) classname += 'active';
+        let className = 'list-group-item ';
+        if (selectedItem === item) className += 'active';
 
         return (
           <li
             key={item[valueProperty]}
             style={{ cursor: 'pointer' }}
-            className={classname}
+            className={className}
             onClick={() => onItemSelect(item)}
+            data-testid="list-group"
           >
             {item[textProperty]}
           </li>

@@ -21,10 +21,11 @@ const TableHeader = ({ sortColumn, onSort, columns }) => {
   };
 
   return (
-    <thead>
+    <thead data-testid="table-header">
       <tr>
         {columns.map((column) => (
           <th
+            data-testId="table-header1"
             className="clickable"
             key={column.path || column.key}
             onClick={() => raiseSort(column.path)}

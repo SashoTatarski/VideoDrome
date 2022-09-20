@@ -14,13 +14,13 @@ const Movies = () => {
     currentPage,
     handlePageChange,
     handleGenreSelect,
-    pageSize
+    pageSize,
   } = useGenres();
-  
+
   const [sortColumn, setSortColumn] = useState({
     path: 'title',
     order: 'asc',
-  }); 
+  });
 
   const handleSort = (column) => {
     setSortColumn(column);
@@ -47,12 +47,13 @@ const Movies = () => {
   return !movies.length ? (
     <p>No movies in the table</p>
   ) : (
-    <div className="row">
+    <div className="row" data-testid="movies">
       <div className="col-2">
-        <ListGroup
+        <ListGroup          
           items={genres}
           selectedItem={selectedGenre}
           onItemSelect={handleGenreSelect}
+          testId="list-group"
         />
       </div>
       <div className="col">
@@ -63,12 +64,14 @@ const Movies = () => {
           onLike={handleLike}
           onDelete={handleDelete}
           onSort={handleSort}
+          testId="movies-table"
         />
         <Pagination
           itemsCount={totalCount}
           pageSize={pageSize}
           currentPage={currentPage}
           onPageChange={handlePageChange}
+          testId="pagination"
         />
       </div>
     </div>
