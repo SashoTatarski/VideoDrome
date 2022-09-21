@@ -9,9 +9,12 @@ http://SashoTatarski.github.io/VideoDrome
 - Bootstrap
 - Font-awesome
 - Lodash
+- React Testing Library
+- Jest
+- react-hooks-testing-library
 
 - function components
-- hooks
+- Custom Hooks
 - sorting,pagination -> TO DO Prev & Next buttons
 - filtering
 - proptypes, defaultProps

@@ -1,54 +1,26 @@
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
-import { getGenres } from '../services/fakeGenreService';
-import { getMovies } from '../services/fakeMovieService';
+import React, { useState } from 'react';
 import { paginate } from '../utils/paginate';
 import ListGroup from './common/listGroup';
 import Pagination from './common/pagination';
 import MoviesTable from './moviesTable';
+import { useGenres } from './useGenres';
+import { useMovies } from './useMovies';
 
 const Movies = () => {
-  const [movies, setMovies] = useState([]);
-  const [genres, setGenres] = useState([]);
-  const [pageSize, setPageSize] = useState(4);
-  const [selectedGenre, setSelectedGenre] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
+  const { movies, genres, handleDelete, handleLike } = useMovies();
+  const {
+    selectedGenre,
+    currentPage,
+    handlePageChange,
+    handleGenreSelect,
+    pageSize,
+  } = useGenres();
+
   const [sortColumn, setSortColumn] = useState({
     path: 'title',
     order: 'asc',
   });
-
-  useEffect(() => {
-    const genres = [{ _id: '', name: 'All Genres' }, ...getGenres()];
-
-    setGenres(genres);
-    setMovies(getMovies());
-  }, []);
-
-  const { length: count } = movies;
-
-  const handleDelete = (movie) => {
-    const filteredMovies = movies.filter((m) => m._id !== movie._id);
-    setMovies(filteredMovies);
-  };
-
-  const handleLike = (movie) => {
-    const clonedMovies = [...movies];
-    const index = clonedMovies.indexOf(movie);
-    clonedMovies[index] = { ...clonedMovies[index] };
-    clonedMovies[index].liked = !clonedMovies[index].liked;
-
-    setMovies(clonedMovies);
-  };
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const handleGenreSelect = (genre) => {
-    setCurrentPage(1);
-    setSelectedGenre(genre);
-  };
 
   const handleSort = (column) => {
     setSortColumn(column);
@@ -70,17 +42,18 @@ const Movies = () => {
     return { totalCount: filtered.length, data: paginatedMovies };
   };
 
-  const { totalCount, data: paginatedMovies} = getPagedData();
+  const { totalCount, data: paginatedMovies } = getPagedData();
 
-  return count === 0 ? (
+  return !movies.length ? (
     <p>No movies in the table</p>
   ) : (
-    <div className="row">
+    <div className="row" data-testid="movies">
       <div className="col-2">
-        <ListGroup
+        <ListGroup          
           items={genres}
           selectedItem={selectedGenre}
           onItemSelect={handleGenreSelect}
+          testId="list-group"
         />
       </div>
       <div className="col">
@@ -91,12 +64,14 @@ const Movies = () => {
           onLike={handleLike}
           onDelete={handleDelete}
           onSort={handleSort}
+          testId="movies-table"
         />
         <Pagination
           itemsCount={totalCount}
           pageSize={pageSize}
           currentPage={currentPage}
           onPageChange={handlePageChange}
+          testId="pagination"
         />
       </div>
     </div>

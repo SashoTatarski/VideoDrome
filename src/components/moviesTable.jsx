@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Like from './common/like';
 import Table from './common/table';
 
@@ -7,7 +8,7 @@ const MoviesTable = ({
   onDelete,
   onLike,
   sortColumn,
-  onSort,
+  onSort
 }) => {
   const columns = [
     { path: 'title', label: 'Title' },
@@ -34,13 +35,21 @@ const MoviesTable = ({
     },
   ];
   return (
-    <Table
+    <Table      
       columns={columns}
       data={movies}
       sortColumn={sortColumn}
-      onSort={onSort}
+      onSort={onSort}      
     />
   );
+};
+
+MoviesTable.propTypes = {  
+  sortColumn: PropTypes.object.isRequired,
+  onSort: PropTypes.func.isRequired,
+  onLike: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  movies: PropTypes.array.isRequired
 };
 
 export default MoviesTable;
