@@ -1,7 +1,8 @@
-import _ from 'lodash';
 import React from 'react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
 
-const TableBody = ({ data, columns, testId }) => {
+const TableBody = ({ data, columns }) => {
   const renderCell = (item, column) => {
     if (column.content) return column.content(item);
     return _.get(item, column.path);
@@ -12,7 +13,7 @@ const TableBody = ({ data, columns, testId }) => {
   };
 
   return (
-    <tbody data-testId={testId}>
+    <tbody>
       {data.map((item) => (
         <tr key={item._id}>
           {columns.map((column) => (
@@ -24,6 +25,11 @@ const TableBody = ({ data, columns, testId }) => {
       ))}
     </tbody>
   );
+};
+
+TableBody.propTypes = {
+  columns: PropTypes.array.isRequired, 
+  data: PropTypes.array.isRequired,
 };
 
 export default TableBody;

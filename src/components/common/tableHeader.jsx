@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const TableHeader = ({ sortColumn, onSort, columns }) => {
   const raiseSort = (path) => {
@@ -25,7 +26,7 @@ const TableHeader = ({ sortColumn, onSort, columns }) => {
       <tr>
         {columns.map((column) => (
           <th
-            data-testId="table-header1"
+            data-testid="table-header1"
             className="clickable"
             key={column.path || column.key}
             onClick={() => raiseSort(column.path)}
@@ -36,6 +37,12 @@ const TableHeader = ({ sortColumn, onSort, columns }) => {
       </tr>
     </thead>
   );
+};
+
+TableHeader.propTypes = {
+  columns: PropTypes.array.isRequired, 
+  sortColumn: PropTypes.object.isRequired,
+  onSort: PropTypes.func.isRequired,
 };
 
 export default TableHeader;
