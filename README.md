@@ -12,6 +12,7 @@ http://SashoTatarski.github.io/VideoDrome
 - React Testing Library
 - Jest
 - react-hooks-testing-library
+- react-router-dom
 
 - function components
 - Custom Hooks
