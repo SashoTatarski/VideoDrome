@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Customers from './components/customers';
+import LoginForm from './components/loginForm';
 import MovieForm from './components/movieForm';
 import Movies from './components/movies';
 import NavBar from './components/navBar';
@@ -13,6 +14,7 @@ const App = () => {
       <NavBar />
       <main className="container">
         <Routes>
+          <Route path="/login" element={<LoginForm />}></Route>
           <Route path="/movies/:id" element={<MovieForm />}></Route>
           <Route path="/movies" element={<Movies />}></Route>
           <Route path="/customers" element={<Customers />}></Route>

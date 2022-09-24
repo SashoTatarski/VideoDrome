@@ -11,7 +11,7 @@ const Table = ({ columns, sortColumn, onSort, data }) => {
         sortColumn={sortColumn}
         onSort={onSort}
       />
-      <TableBody data={data} columns={columns} testId="table-body" />
+      <TableBody data={data} columns={columns}/>
     </table>
   );
 };

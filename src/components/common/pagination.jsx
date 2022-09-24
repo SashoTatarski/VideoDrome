@@ -13,7 +13,7 @@ const Pagination = ({
 
   if (pagesCount === 1) return null;
   return (
-    <nav>
+    <nav data-testid='pagination'>
       <ul className="pagination">
         {pages.map((page) => (
           <li
