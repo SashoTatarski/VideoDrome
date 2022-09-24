@@ -7,7 +7,7 @@ import App from './App';
 import './index.css';
 
 ReactDOMClient.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/VideoDrome">
     <App />
   </BrowserRouter>
 );
