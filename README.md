@@ -13,6 +13,7 @@ http://SashoTatarski.github.io/VideoDrome
 - Jest
 - react-hooks-testing-library
 - react-router-dom
+- Joi validation
 
 - function components
 - Custom Hooks
