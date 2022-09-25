@@ -6,6 +6,7 @@ import MovieForm from './components/movieForm';
 import Movies from './components/movies';
 import NavBar from './components/navBar';
 import NotFound from './components/notFound';
+import RegisterForm from './components/registerForm';
 import Rentals from './components/rentals';
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
       <main className="container">
         <Routes>
           <Route path="/login" element={<LoginForm />}></Route>
+          <Route path="/register" element={<RegisterForm />}></Route>
           <Route path="/movies/:id" element={<MovieForm />}></Route>
           <Route path="/movies" element={<Movies />}></Route>
           <Route path="/customers" element={<Customers />}></Route>
