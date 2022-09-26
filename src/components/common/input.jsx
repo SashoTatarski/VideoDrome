@@ -2,7 +2,7 @@ import React from 'react';
 
 const Input = ({ name, label, error, ...rest }) => {
   return (
-    <div className="form-group">
+    <div data-testid='input' className="form-group">
       <label htmlFor={name}>{label}</label>
       <input
         {...rest}
