@@ -1,7 +1,9 @@
 import Joi from 'joi-browser';
 import { useState } from 'react';
+import React, {Component} from 'react';
 
-export const useForm = (schema, doSubmit) => {
+
+export const useForm = (schema, doSubmit) => {    
   const [data, setData] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -49,6 +51,12 @@ export const useForm = (schema, doSubmit) => {
     setData(nextDataState);
   };
 
+  const renderButton = (input) => (
+    <button disabled={validate()} className="btn btn-primary">
+      {input}
+    </button>
+  );
+
   return {
     data,
     errors,
@@ -56,5 +64,6 @@ export const useForm = (schema, doSubmit) => {
     validateProperty,
     handleSubmit,
     handleChange,
+    renderButton
   };
 };

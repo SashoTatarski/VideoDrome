@@ -16,8 +16,7 @@ http://SashoTatarski.github.io/VideoDrome
 - Joi validation
 
 - function components
-- Custom Hooks
 - sorting,pagination -> TO DO Prev & Next buttons
 - filtering
 - proptypes, defaultProps
-- useState, useEffect
+- useState, useEffect, custom hooks

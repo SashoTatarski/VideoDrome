@@ -8,13 +8,15 @@ const LoginForm = () => {
     username: Joi.string().required().label('Username'),
     password: Joi.string().required().label('Password'),
   };
+  
   const doSubmit = () => {
     // Call the server
     console.log('Submitted');
   };
-
-  const { data, errors, validate, handleSubmit, handleChange } =
+  
+  const { data, errors, handleSubmit, handleChange, renderButton } =
     useForm(schema, doSubmit);
+
   return (
     <div>
       <h1>Login</h1>
@@ -37,12 +39,11 @@ const LoginForm = () => {
             error={errors.password}
           />
         </div>
-        <button disabled={validate()} className="btn btn-primary">
-          Login
-        </button>
+        {renderButton('Login')}        
       </form>
     </div>
   );
+  
 };
 
 export default LoginForm;
