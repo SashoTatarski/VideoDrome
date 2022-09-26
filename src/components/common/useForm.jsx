@@ -56,8 +56,9 @@ export const useForm = (schema, doSubmit) => {
     </button>
   );
 
-  const renderInput = (name, label) => (
+  const renderInput = (name, label, type = 'text') => (
     <Input
+      type={type}
       name={name}
       value={data[name]}
       label={label}
@@ -74,6 +75,6 @@ export const useForm = (schema, doSubmit) => {
     handleSubmit,
     handleChange,
     renderButton,
-    renderInput
+    renderInput,
   };
 };

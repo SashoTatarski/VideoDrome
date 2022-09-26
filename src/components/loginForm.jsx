@@ -23,7 +23,7 @@ const LoginForm = () => {
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         {renderInput('username', 'Username')}
-        {renderInput('password', 'Password')}
+        {renderInput('password', 'Password', 'password')}
         {renderButton('Login')}
       </form>
     </div>
