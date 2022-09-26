@@ -1,9 +1,8 @@
 import Joi from 'joi-browser';
-import { useState } from 'react';
-import React, {Component} from 'react';
+import React, { useState } from 'react';
+import Input from './input';
 
-
-export const useForm = (schema, doSubmit) => {    
+export const useForm = (schema, doSubmit) => {
   const [data, setData] = useState({});
   const [errors, setErrors] = useState({});
 
@@ -57,6 +56,16 @@ export const useForm = (schema, doSubmit) => {
     </button>
   );
 
+  const renderInput = (name, label) => (
+    <Input
+      name={name}
+      value={data[name]}
+      label={label}
+      onChange={handleChange}
+      error={errors[name]}
+    />
+  );
+
   return {
     data,
     errors,
@@ -64,6 +73,7 @@ export const useForm = (schema, doSubmit) => {
     validateProperty,
     handleSubmit,
     handleChange,
-    renderButton
+    renderButton,
+    renderInput
   };
 };
