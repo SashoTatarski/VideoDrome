@@ -1,16 +1,18 @@
 import Joi from 'joi-browser';
-import React, { useState, useEffect } from 'react';
+import React, { useReducer } from 'react';
+import { dataReducer } from '../dataReducer';
+import { errorReducer } from '../errorReducer';
 import Input from './input';
 import Select from './select';
 
-export const useForm = (schema, doSubmit, movieData = {}) => { 
-    console.log(movieData);
-    const [data, setData] = useState('');
-    const [errors, setErrors] = useState({});  
+export const useForm = (schema, doSubmit, movieData = {}) => {
+  console.log(movieData);
+  const [data, dispatchData] = useReducer(dataReducer, {});
+  const [errors, dispatchErrors] = useReducer(errorReducer, {});
 
-    useEffect(() => {
-        setData(movieData);
-      }, []);
+  // useEffect(() => {
+  //     setData(movieData);
+  //   }, []);
 
   const validate = () => {
     const options = { abortEarly: false };
@@ -23,14 +25,6 @@ export const useForm = (schema, doSubmit, movieData = {}) => {
     return errors;
   };
 
-  const validateProperty = ({ name, value }) => {
-    const obj = { [name]: value };
-    const propSchema = { [name]: schema[name] };
-    const { error } = Joi.validate(obj, propSchema);
-
-    return error ? error.details[0].message : null;
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -41,19 +35,9 @@ export const useForm = (schema, doSubmit, movieData = {}) => {
     doSubmit();
   };
 
-  const handleChange = ({ target: input }) => {
-    const nextErrorsState = { ...errors };
-    const errorMessage = validateProperty(input);
-    if (errorMessage) nextErrorsState[input.name] = errorMessage;
-    else delete nextErrorsState[input.name];
-    setErrors(nextErrorsState || {});
-    
-    const nextDataState = {
-      ...data,
-      [input.name]: input.value,
-    };
-
-    setData(nextDataState);
+  const handleChange = ({ target: input }) => {   
+    dispatchErrors({ type: 'change', input: {input}});
+    dispatchData({ type: 'change', input: { input } });
   };
 
   const renderButton = (input) => {
