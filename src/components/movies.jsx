@@ -1,37 +1,73 @@
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getGenres } from '../services/fakeGenreService';
+import { getMovies } from '../services/fakeMovieService';
 import { paginate } from '../utils/paginate';
 import ListGroup from './common/listGroup';
 import Pagination from './common/pagination';
 import MoviesTable from './moviesTable';
-import { useGenres } from './useGenres';
-import { useMovies } from './useMovies';
+import SearchBox from './common/searchBox';
 
 const Movies = () => {
-  const { movies, genres, handleDelete, handleLike } = useMovies();
-  const {
-    selectedGenre,
-    currentPage,
-    handlePageChange,
-    handleGenreSelect,
-    pageSize,
-  } = useGenres();
+  const [movies, setMovies] = useState([]);
+  const [genres, setGenres] = useState([]);  
 
-  const [sortColumn, setSortColumn] = useState({
-    path: 'title',
-    order: 'asc',
-  });
+  const [selectedGenre, setSelectedGenre] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(4);
+  const [sortColumn, setSortColumn] = useState({ path: 'title', order: 'asc', });
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  useEffect(() => {
+    const genres = [{ _id: '', name: 'All Genres' }, ...getGenres()];
+    setGenres(genres);
+
+    setMovies(getMovies);
+  }, []);
+
+  const handleDelete = (movie) => {
+    const filteredMovies = movies.filter((m) => m._id !== movie._id);
+    setMovies(filteredMovies);
+  };
+
+  const handleLike = (movie) => {
+    const clonedMovies = [...movies];
+    const index = clonedMovies.indexOf(movie);
+    clonedMovies[index] = { ...clonedMovies[index] };
+    clonedMovies[index].liked = !clonedMovies[index].liked;
+
+    setMovies(clonedMovies);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleGenreSelect = (genre) => {
+    setCurrentPage(1);
+    setSelectedGenre(genre);
+    setSearchQuery('');
+  };
 
   const handleSort = (column) => {
     setSortColumn(column);
   };
+  
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    setSelectedGenre(null);
+    setCurrentPage(1);
+  }
 
   const getPagedData = () => {
-    const filtered =
-      selectedGenre && selectedGenre._id
-        ? movies.filter((m) => m.genre._id === selectedGenre._id)
-        : movies;
+    let filtered = movies;
+    if (searchQuery)
+      filtered = movies.filter(m => 
+        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+        );
+    else if (selectedGenre && selectedGenre._id)
+        filtered = movies.filter(m => m.genre._id === selectedGenre._id);
 
     const sorted = _.orderBy(
       filtered,
@@ -42,7 +78,6 @@ const Movies = () => {
 
     return { totalCount: filtered.length, data: paginatedMovies };
   };
-
   const { totalCount, data: paginatedMovies } = getPagedData();
 
   return !movies.length ? (
@@ -66,6 +101,7 @@ const Movies = () => {
           New Movie
         </Link>
         <p>Showing {totalCount} movies</p>
+        <SearchBox value={searchQuery} onChange={handleSearch} />
         <MoviesTable
           movies={paginatedMovies}
           sortColumn={sortColumn}

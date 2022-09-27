@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react';
 import Input from './input';
 import Select from './select';
 
-export const useForm = (movieData = {}, schema, doSubmit) => { 
-    const [data, setData] = useState({});
+export const useForm = (schema, doSubmit, movieData = {}) => { 
+    console.log(movieData);
+    const [data, setData] = useState('');
     const [errors, setErrors] = useState({});  
 
     useEffect(() => {
         setData(movieData);
-      }, [movieData]);
+      }, []);
 
   const validate = () => {
     const options = { abortEarly: false };

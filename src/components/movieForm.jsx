@@ -40,7 +40,7 @@ const MovieForm = () => {
     if (!movie) navigate('/not-found', { replace: true });
     
     setMovieData(mapToViewModel(movie));
-  }, []);
+  }, [data]);
 
   const mapToViewModel = (movie) => {
     return {
@@ -59,7 +59,7 @@ const MovieForm = () => {
   };
 
   const { handleSubmit, renderButton, renderInput, renderSelect, data } =
-    useForm(movieData, schema, doSubmit);
+    useForm(schema, doSubmit, movieData);
 
   return (
     <div>
