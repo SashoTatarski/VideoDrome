@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { paginate } from '../utils/paginate';
 import ListGroup from './common/listGroup';
 import Pagination from './common/pagination';
@@ -49,7 +50,7 @@ const Movies = () => {
   ) : (
     <div className="row" data-testid="movies">
       <div className="col-2">
-        <ListGroup          
+        <ListGroup
           items={genres}
           selectedItem={selectedGenre}
           onItemSelect={handleGenreSelect}
@@ -57,6 +58,13 @@ const Movies = () => {
         />
       </div>
       <div className="col">
+        <Link
+          to="/movies/new"
+          className="btn btn-primary"
+          style={{ marginBottom: 20 }}
+        >
+          New Movie
+        </Link>
         <p>Showing {totalCount} movies</p>
         <MoviesTable
           movies={paginatedMovies}

@@ -1,10 +1,15 @@
 import Joi from 'joi-browser';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Input from './input';
+import Select from './select';
 
-export const useForm = (schema, doSubmit) => {
-  const [data, setData] = useState({});
-  const [errors, setErrors] = useState({});
+export const useForm = (movieData = {}, schema, doSubmit) => { 
+    const [data, setData] = useState({});
+    const [errors, setErrors] = useState({});  
+
+    useEffect(() => {
+        setData(movieData);
+      }, [movieData]);
 
   const validate = () => {
     const options = { abortEarly: false };
@@ -41,7 +46,7 @@ export const useForm = (schema, doSubmit) => {
     if (errorMessage) nextErrorsState[input.name] = errorMessage;
     else delete nextErrorsState[input.name];
     setErrors(nextErrorsState || {});
-
+    
     const nextDataState = {
       ...data,
       [input.name]: input.value,
@@ -50,18 +55,33 @@ export const useForm = (schema, doSubmit) => {
     setData(nextDataState);
   };
 
-  const renderButton = (input) => (
-    <button disabled={validate()} className="btn btn-primary">
-      {input}
-    </button>
-  );
+  const renderButton = (input) => {
+    return (
+      <button disabled={validate()} className="btn btn-primary">
+        {input}
+      </button>
+    );
+  };
 
-  const renderInput = (name, label, type = 'text') => (
-    <Input
-      type={type}
+  const renderInput = (name, label, type = 'text') => {
+    return (
+      <Input
+        type={type}
+        name={name}
+        value={data[name]}
+        label={label}
+        onChange={handleChange}
+        error={errors[name]}
+      />
+    );
+  };
+
+  const renderSelect = (name, label, options) => (
+    <Select
       name={name}
       value={data[name]}
       label={label}
+      options={options}
       onChange={handleChange}
       error={errors[name]}
     />
@@ -76,5 +96,6 @@ export const useForm = (schema, doSubmit) => {
     handleChange,
     renderButton,
     renderInput,
+    renderSelect,
   };
 };
