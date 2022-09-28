@@ -52,7 +52,7 @@ const MovieForm = () => {
     };
   };
 
-  const doSubmit = () => {
+  const doSubmit = () => {    
     saveMovie(data);
 
     navigate('/movies');

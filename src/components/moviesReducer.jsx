@@ -16,17 +16,12 @@ export const moviesReducer = (state, { type, field, value }) => {
     case 'handleLike': {
       const clonedMovies = [...state.movies];
       const movie = value;
-      
+
       const index = clonedMovies.indexOf(movie);
       clonedMovies[index] = { ...clonedMovies[index] };
       clonedMovies[index].liked = !clonedMovies[index].liked;
 
       return { ...state, [field]: clonedMovies };
-    }
-
-    case 'getPagedData': { 
-        getPagedData(state);       
-        return state    
     }
 
     default:

@@ -1,14 +1,12 @@
-import _ from 'lodash';
 import React, { useEffect, useReducer } from 'react';
 import { Link } from 'react-router-dom';
 import { getGenres } from '../services/fakeGenreService';
-
+import { getMovies } from './../services/fakeMovieService';
 import ListGroup from './common/listGroup';
 import Pagination from './common/pagination';
 import SearchBox from './common/searchBox';
-import { moviesReducer, initialState, getPagedData } from './moviesReducer';
+import { getPagedData, initialState, moviesReducer } from './moviesReducer';
 import MoviesTable from './moviesTable';
-import { getMovies } from './../services/fakeMovieService';
 
 const Movies = () => {
   const [state, dispatch] = useReducer(moviesReducer, initialState);
@@ -48,7 +46,7 @@ const Movies = () => {
     dispatch({ type: 'changeValue', field: 'selectedGenre', value: null});
     dispatch({ type: 'changeValue', field: 'currentPage', value: 1});
   }  
-  
+
   const {totalCount, data} = getPagedData(state);
 
   return !movies.length ? (

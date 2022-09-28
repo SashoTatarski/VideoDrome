@@ -1,37 +1,42 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { dataReducer } from '../dataReducer';
 import { errorReducer, validate } from '../errorReducer';
 import Input from './input';
 import Select from './select';
 
 export const useForm = (schema, doSubmit, movieData = {}) => {
-
   const [data, dispatchData] = useReducer(dataReducer, {});
   const [errors, dispatchErrors] = useReducer(errorReducer, {});
-
-  // useEffect(() => {
-  //     setData(movieData);
-  //   }, []);
   
+  useEffect(() => {
+    dispatchData({ type: 'initData', input: movieData})
+  }, [movieData]);
+
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
+
+    dispatchErrors({ type: 'submit', schema: { schema } });    
     
-    dispatchErrors({ type: 'submit', schema: {schema}})
-    
-    if (errors) return;   
+    if (Object.keys(errors).length !== 0) return;
 
     doSubmit();
   };
 
-
-  const handleChange = ({ target: input }) => {   
-    dispatchErrors({ type: 'error', input: {input}, schema: {schema} });
+  const handleChange = ({ target: input }) => {
+    dispatchErrors({
+      type: 'error',
+      input: { input },
+      schema: { schema },
+    });
     dispatchData({ type: 'change', input: { input } });
   };
 
   const renderButton = (input) => {
     return (
-      <button disabled={validate(data, schema)} className="btn btn-primary">
+      <button
+        disabled={validate(data, schema)}
+        className="btn btn-primary"
+      >
         {input}
       </button>
     );
@@ -63,7 +68,7 @@ export const useForm = (schema, doSubmit, movieData = {}) => {
 
   return {
     data,
-    errors,    
+    errors,
     handleSubmit,
     handleChange,
     renderButton,
