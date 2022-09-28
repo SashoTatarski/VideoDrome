@@ -19,4 +19,4 @@ http://SashoTatarski.github.io/VideoDrome
 - sorting,pagination -> TO DO Prev & Next buttons
 - filtering
 - proptypes, defaultProps
-- useState, useEffect, custom hooks
+- useState, useEffect, useRef, useReducer, custom hooks
