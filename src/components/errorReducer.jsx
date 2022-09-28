@@ -1,3 +1,4 @@
+
 import Joi from 'joi-browser';
 
 export const errorReducer = (state, action) => {
@@ -23,6 +24,7 @@ export const errorReducer = (state, action) => {
   }
 };
 
+
 const validate = (data, schema) => {
   const options = { abortEarly: false };
   const { error } = Joi.validate(data, schema, options);
@@ -34,6 +36,7 @@ const validate = (data, schema) => {
 };
 
 const validateProperty = ({ name, value }, schema) => {
+
   const obj = { [name]: value };
   const propSchema = { [name]: schema[name] };
   const { error } = Joi.validate(obj, propSchema);
