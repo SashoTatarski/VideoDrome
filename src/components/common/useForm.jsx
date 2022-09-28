@@ -1,12 +1,13 @@
 import Joi from 'joi-browser';
 import React, { useReducer } from 'react';
+
 import { dataReducer } from '../dataReducer';
 import { errorReducer } from '../errorReducer';
 import Input from './input';
 import Select from './select';
 
 export const useForm = (schema, doSubmit, movieData = {}) => {
-  console.log(movieData);
+
   const [data, dispatchData] = useReducer(dataReducer, {});
   const [errors, dispatchErrors] = useReducer(errorReducer, {});
 
@@ -27,16 +28,19 @@ export const useForm = (schema, doSubmit, movieData = {}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+ 
+    dispatchErrors({ type: 'submit'})
+    //debugger
 
-    const nextErrorsState = validate();
-    setErrors(nextErrorsState || {});
-    if (nextErrorsState) return;
+    if (errors) return;
 
     doSubmit();
   };
 
+
   const handleChange = ({ target: input }) => {   
     dispatchErrors({ type: 'change', input: {input}});
+
     dispatchData({ type: 'change', input: { input } });
   };
 
@@ -74,9 +78,7 @@ export const useForm = (schema, doSubmit, movieData = {}) => {
 
   return {
     data,
-    errors,
-    validate,
-    validateProperty,
+    errors,    
     handleSubmit,
     handleChange,
     renderButton,
