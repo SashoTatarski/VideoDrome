@@ -18,7 +18,6 @@ export const useForm = (schema, doSubmit, movieData = {}) => {
     
     dispatchErrors({ type: 'submit', schema: {schema}})
     
-    console.log(errors);
     if (errors) return;   
 
     doSubmit();

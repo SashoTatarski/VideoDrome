@@ -6,17 +6,18 @@ const Pagination = ({
   itemsCount,
   pageSize,
   currentPage,
-  onPageChange
+  onPageChange,
 }) => {
   const pagesCount = Math.ceil(itemsCount / pageSize);
   const pages = _.range(1, pagesCount + 1);
 
   if (pagesCount === 1) return null;
   return (
-    <nav data-testid='pagination'>
+    <nav data-testid="pagination">
       <ul className="pagination">
         {pages.map((page) => (
           <li
+            style={{ cursor: 'pointer' }}
             key={page}
             className={
               page === currentPage ? 'page-item active' : 'page-item'

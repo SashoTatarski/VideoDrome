@@ -1,84 +1,55 @@
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Link } from 'react-router-dom';
 import { getGenres } from '../services/fakeGenreService';
-import { getMovies } from '../services/fakeMovieService';
-import { paginate } from '../utils/paginate';
+
 import ListGroup from './common/listGroup';
 import Pagination from './common/pagination';
-import MoviesTable from './moviesTable';
 import SearchBox from './common/searchBox';
+import { moviesReducer, initialState, getPagedData } from './moviesReducer';
+import MoviesTable from './moviesTable';
+import { getMovies } from './../services/fakeMovieService';
 
 const Movies = () => {
-  const [movies, setMovies] = useState([]);
-  const [genres, setGenres] = useState([]);  
-
-  const [selectedGenre, setSelectedGenre] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(4);
-  const [sortColumn, setSortColumn] = useState({ path: 'title', order: 'asc', });
-  const [searchQuery, setSearchQuery] = useState('');
+  const [state, dispatch] = useReducer(moviesReducer, initialState);
+  const { movies, genres, searchQuery, selectedGenre, currentPage, pageSize, sortColumn} = state;
   
   useEffect(() => {
     const genres = [{ _id: '', name: 'All Genres' }, ...getGenres()];
-    setGenres(genres);
-
-    setMovies(getMovies);
+    dispatch({ type: 'changeValue', field:'genres', value: genres})
+    
+    dispatch({ type: 'changeValue', field:'movies', value: getMovies()});
   }, []);
 
-  const handleDelete = (movie) => {
-    const filteredMovies = movies.filter((m) => m._id !== movie._id);
-    setMovies(filteredMovies);
+  const handleDelete = (movie) => {    
+    dispatch({ type: 'handleDelete', field: 'movies', value: movie});
   };
 
-  const handleLike = (movie) => {
-    const clonedMovies = [...movies];
-    const index = clonedMovies.indexOf(movie);
-    clonedMovies[index] = { ...clonedMovies[index] };
-    clonedMovies[index].liked = !clonedMovies[index].liked;
-
-    setMovies(clonedMovies);
+  const handleLike = (movie) => {    
+    dispatch({ type: 'handleLike', field: 'movies', value: movie});
   };
 
   const handlePageChange = (page) => {
-    setCurrentPage(page);
+    dispatch({ type: 'changeValue', field: 'currentPage', value: page});
   };
 
   const handleGenreSelect = (genre) => {
-    setCurrentPage(1);
-    setSelectedGenre(genre);
-    setSearchQuery('');
+    dispatch({ type: 'changeValue', field: 'currentPage', value: 1});
+    dispatch({ type: 'changeValue', field:'selectedGenre', value: genre});
+    dispatch({ type: 'changeValue', field: 'searchQuery', value: ''});
   };
 
   const handleSort = (column) => {
-    setSortColumn(column);
+    dispatch({ type: 'changeValue', field: 'sortColumn', value: column});
   };
   
   const handleSearch = (query) => {
-    setSearchQuery(query);
-    setSelectedGenre(null);
-    setCurrentPage(1);
-  }
-
-  const getPagedData = () => {
-    let filtered = movies;
-    if (searchQuery)
-      filtered = movies.filter(m => 
-        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
-        );
-    else if (selectedGenre && selectedGenre._id)
-        filtered = movies.filter(m => m.genre._id === selectedGenre._id);
-
-    const sorted = _.orderBy(
-      filtered,
-      [sortColumn.path],
-      [sortColumn.order]
-    );
-    const paginatedMovies = paginate(sorted, currentPage, pageSize);
-
-    return { totalCount: filtered.length, data: paginatedMovies };
-  };
-  const { totalCount, data: paginatedMovies } = getPagedData();
+    dispatch({ type: 'changeValue', field: 'searchQuery', value: query});
+    dispatch({ type: 'changeValue', field: 'selectedGenre', value: null});
+    dispatch({ type: 'changeValue', field: 'currentPage', value: 1});
+  }  
+  
+  const {totalCount, data} = getPagedData(state);
 
   return !movies.length ? (
     <p>No movies in the table</p>
@@ -103,7 +74,7 @@ const Movies = () => {
         <p>Showing {totalCount} movies</p>
         <SearchBox value={searchQuery} onChange={handleSearch} />
         <MoviesTable
-          movies={paginatedMovies}
+          movies={data}
           sortColumn={sortColumn}
           onLike={handleLike}
           onDelete={handleDelete}

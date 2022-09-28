@@ -7,7 +7,7 @@ const TableBody = ({ data, columns }) => {
     if (column.content) return column.content(item);
     return _.get(item, column.path);
   };
-
+  
   const createKey = (item, column) => {
     return item._id + (column.path || column.key);
   };
