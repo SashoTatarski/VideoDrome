@@ -1,8 +1,6 @@
-import Joi from 'joi-browser';
 import React, { useReducer } from 'react';
-
 import { dataReducer } from '../dataReducer';
-import { errorReducer } from '../errorReducer';
+import { errorReducer, validate } from '../errorReducer';
 import Input from './input';
 import Select from './select';
 
@@ -14,39 +12,27 @@ export const useForm = (schema, doSubmit, movieData = {}) => {
   // useEffect(() => {
   //     setData(movieData);
   //   }, []);
-
-  const validate = () => {
-    const options = { abortEarly: false };
-    const { error } = Joi.validate(data, schema, options);
-    if (!error) return null;
-
-    const errors = {};
-    for (let item of error.details)
-      errors[item.path[0]] = item.message;
-    return errors;
-  };
-
+  
   const handleSubmit = (e) => {
-    e.preventDefault();
- 
-    dispatchErrors({ type: 'submit'})
-    //debugger
-
-    if (errors) return;
+    e.preventDefault(); 
+    
+    dispatchErrors({ type: 'submit', schema: {schema}})
+    
+    console.log(errors);
+    if (errors) return;   
 
     doSubmit();
   };
 
 
   const handleChange = ({ target: input }) => {   
-    dispatchErrors({ type: 'change', input: {input}});
-
+    dispatchErrors({ type: 'error', input: {input}, schema: {schema} });
     dispatchData({ type: 'change', input: { input } });
   };
 
   const renderButton = (input) => {
     return (
-      <button disabled={validate()} className="btn btn-primary">
+      <button disabled={validate(data, schema)} className="btn btn-primary">
         {input}
       </button>
     );

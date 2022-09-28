@@ -1,31 +1,29 @@
-
 import Joi from 'joi-browser';
 
 export const errorReducer = (state, action) => {
+  let updatedState = { ...state };
   switch (action.type) {
     case 'error':
-        //console.log(action.input);
-    
-      const { input } = action.input;      
+      const { input } = action.input;
       const { schema } = action.schema;
-      let nextErrorsState = { ...state };
       const errorMessage = validateProperty(input, schema);
 
-      if (errorMessage) nextErrorsState[input.name] = errorMessage;
-      else delete nextErrorsState[input.name];
-      return nextErrorsState || {};
+      if (errorMessage) updatedState[input.name] = errorMessage;
+      else delete updatedState[input.name];
+
+      return updatedState || {};
 
     case 'submit':
-      nextErrorsState = validate(state, schema);
-      return nextErrorsState || {};
+      updatedState = validate(state, action.schema);
+
+      return updatedState || {};
 
     default:
       return state;
   }
 };
 
-
-const validate = (data, schema) => {
+export const validate = (data, schema) => {
   const options = { abortEarly: false };
   const { error } = Joi.validate(data, schema, options);
   if (!error) return null;
@@ -36,7 +34,6 @@ const validate = (data, schema) => {
 };
 
 const validateProperty = ({ name, value }, schema) => {
-
   const obj = { [name]: value };
   const propSchema = { [name]: schema[name] };
   const { error } = Joi.validate(obj, propSchema);
